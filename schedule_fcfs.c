@@ -20,12 +20,13 @@ struct node *head = NULL;
 void add(char *name, int priority, int burst) {
     Task *newTask = malloc(sizeof(Task));
     if (!newTask) return;
+
+    newTask->burst = burst;
     newTask->name = strdup(name);
     newTask->priority = priority;
-    newTask->burst = burst;
     newTask->tid = 0;
 
-    // insert(&head, t);
+    // insert(&head, newTask);
 
     struct node *newNode = malloc(sizeof(struct node));
     if (!newNode) {
@@ -33,37 +34,44 @@ void add(char *name, int priority, int burst) {
         free(newTask);
         return;
     }
+
+
+    // implement fcfs 
     newNode->task = newTask;
     newNode->next = NULL;
 
-    // fcfs
     if (head == NULL) {
         head = newNode;
     } else {
-        struct node *cur = head;
-        while (cur->next != NULL) cur = cur->next;
-        cur->next = newNode;
+        struct node *tempNode = head;
+        while (tempNode->next != NULL) {
+        tempNode = tempNode->next;
+    }
+
+    tempNode->next = newNode; 
     }
 }
 
-// return the task at the head
 Task* pickNextTask() {
+    // return head node as it was first entered
     if (head == NULL) return NULL;
     return head->task;
 }
 
-// run, free node and task
-void schedule() {
-    while (head != NULL) {
-        struct node *cur = head;
-        Task *newTask = cur->task;
+// run the task and free memory
+void schedule () {
+    printf("FCFS Scheduling\n\n");
 
+    while(head != NULL) {
+        struct node *tempNode = head;
+        Task *newTask = tempNode->task;
         run(newTask, newTask->burst);
-
         head = head->next;
 
-        if (newTask->name) free(newTask->name);
+        if (newTask->name != NULL) free(newTask->name);
         free(newTask);
-        free(cur);
+        free(tempNode);
+
+
     }
 }

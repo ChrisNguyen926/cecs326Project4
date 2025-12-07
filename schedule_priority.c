@@ -46,9 +46,9 @@ Task *pickNextTask() {
 }
 
 // Invoke the scheduler
-void schedule() {
+void schedule() {    
     printf("Priority Scheduling\n\n");
-    
+
     // Execute tasks in priority order 
     while (head != NULL) {
         Task *current = pickNextTask();
