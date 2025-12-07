@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stddef.h>
-
+#include <string.h>
 #include "task.h"
 #include "list.h"
 #include "cpu.h"
